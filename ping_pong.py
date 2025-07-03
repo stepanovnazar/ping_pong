@@ -27,13 +27,20 @@ class GameSprite(sprite.Sprite):
         window.blit(self.image, (self.rect.x, self.rect.y))
 
 class Player(GameSprite):
-    def update(self):
+    def update_l(self):
         keys_pressed = key.get_pressed()
 
-        if keys_pressed[K_a] and self.rect.x>5:
-            self.rect.x -= self.speed
-        if keys_pressed[K_d] and self.rect.x< 650:
-           self.rect.x += self.speed
+        if keys_pressed[K_w] and self.rect.y>0:
+            self.rect.y-= self.speed
+        if keys_pressed[K_s] and self.rect.y<430:
+           self.rect.y+= self.speed
+    def update_r(self):
+        keys_pressed = key.get_pressed()
+
+        if keys_pressed[K_UP] and self.rect.y>0:
+            self.rect.y-= self.speed
+        if keys_pressed[K_DOWN] and self.rect.y<430:
+           self.rect.y+= self.speed
 
 
 
@@ -42,7 +49,8 @@ class Player(GameSprite):
 font = font.SysFont('Arial',35)
 win = font.render('YOU WIN!', True, (0,255,0))
 loose = font.render('YOU LOSE!', True, (255,0,0))
-# player = Player('racket.png', 10,400, 10, 50,100)
+player_l = Player('racket.png', 10,400, 10, 30,70)
+player_r = Player('racket.png',670,400,10,30,70)
 
 
 
@@ -56,8 +64,10 @@ while game:
 
     if finish != True:
         window.blit(background, (0, 0))
-        # player.update()
-        # player.reset()
+        player_l.update_l()
+        player_l.reset()
+        player_r.update_r()
+        player_r.reset()
 
     
     display.update()
