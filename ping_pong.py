@@ -49,11 +49,12 @@ class Player(GameSprite):
 font = font.SysFont('Arial',35)
 win = font.render('YOU WIN!', True, (0,255,0))
 loose = font.render('YOU LOSE!', True, (255,0,0))
-player_l = Player('racket.png', 10,400, 10, 30,70)
-player_r = Player('racket.png',670,400,10,30,70)
+player_l = Player('racket.png', 0,410, 10, 40,80)
+player_r = Player('racket.png',660,390,10,40,80)
 ball = GameSprite('ball.png',350,250,0,30,30)
 
-
+speed_x = 3
+speed_y = 3
 
 game = True
 finish = False
@@ -61,6 +62,7 @@ while game:
     for e in event.get():
         if e.type == QUIT:
             game = False
+    
 
     if finish != True:
         window.blit(background, (0, 0))
@@ -69,7 +71,16 @@ while game:
         player_r.update_r()
         player_r.reset()
         ball.reset()
+        ball.rect.x += speed_x
+        ball.rect.y += speed_y
+        if ball.rect.y >= 470 :
+            speed_y *= -1
+        if ball.rect.y <= 0:
+            speed_y *= -1
+        if sprite.collide_rect(player_l,ball) or sprite.collide_rect(player_r,ball):
+            speed_x *= -1
 
     
     display.update()
     clock.tick(FPS)
+
