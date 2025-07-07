@@ -47,8 +47,8 @@ class Player(GameSprite):
 
 
 font = font.SysFont('Arial',35)
-win = font.render('YOU WIN!', True, (0,255,0))
-loose = font.render('YOU LOSE!', True, (255,0,0))
+loose_l = font.render('LEFT PLAYER LOST!', True, (255,0,0))
+loose_r = font.render('RIGHT PLAYER LOST!', True, (255,0,0))
 player_l = Player('racket.png', 0,410, 10, 40,80)
 player_r = Player('racket.png',660,390,10,40,80)
 ball = GameSprite('ball.png',350,250,0,30,30)
@@ -79,6 +79,12 @@ while game:
             speed_y *= -1
         if sprite.collide_rect(player_l,ball) or sprite.collide_rect(player_r,ball):
             speed_x *= -1
+        if ball.rect.x <0 :
+            window.blit(loose_l,(350,250))
+            finish = True
+        if ball.rect.x > 700 :
+            window.blit(loose_r,(350,250))
+            finish = True
 
     
     display.update()
